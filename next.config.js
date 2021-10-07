@@ -1,3 +1,9 @@
-module.exports = {
-  reactStrictMode: true,
-}
+const withMDX = require('@next/mdx')({
+	extension: /\.(md|mdx)$/,
+})
+
+module.exports = withMDX({
+	images: {
+		domains: ['i.imgur.com'],
+	},
+})

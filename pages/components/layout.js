@@ -1,53 +1,77 @@
 import Link from 'next/link'
-import {
-  Container,
-  Heading,
-  IconButton,
-  Text,
-  Flex,
-  useColorMode,
-  Box,
-} from '@chakra-ui/react'
-import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { Grid, Text, Page, useTheme, Button } from '@geist-ui/react'
+import { Moon, Sun, GitBranch } from '@geist-ui/react-icons'
+import { useCallback } from 'react'
 
-const Header = ({ title }) => {
-  const { colorMode, toggleColorMode } = useColorMode()
-  return (
-    <Flex alignItems="center" justifyContent="space-between" my={5}>
-      <Heading fontSize="sm">
-        <Link
-          href="/"
-        >
-          {title}
-        </Link>
-      </Heading>
-      <IconButton
-        onClick={toggleColorMode}
-        icon={colorMode === 'dark' ? <MoonIcon /> : <SunIcon />}
-      />
-    </Flex>
-  )
+const Header = ({ title, switchTheme }) => {
+	const { type } = useTheme()
+	return (
+		<Grid.Container gap={1} justify="center">
+			<Grid xs={24} sm={8} alignItems="center">
+				<Text h3 p="0" margin="0">
+					<Link href="/">{title}</Link>
+				</Text>
+			</Grid>
+			<Grid xs={24} sm={8} alignItems="center" justify="flex-end">
+				<Button
+					w="70px"
+					mr={1}
+					h={0.7}
+					auto
+					icon={<GitBranch />}
+					scale={2 / 3}
+				>
+					Contact me
+				</Button>
+				<Button
+					type="abort"
+					h={0.7}
+					onClick={switchTheme}
+					iconRight={type === 'light' ? <Sun /> : <Moon />}
+					auto
+					scale={2 / 3}
+				/>
+			</Grid>
+		</Grid.Container>
+	)
 }
 
-const Layout = ({ children }) => {
-  const title = "thien k phan";
+const Content = ({ children }) => {
+	return (
+		<Grid.Container justify="center">
+			<Grid xs sm={16} direction="column">
+				{children}
+			</Grid>
+		</Grid.Container>
+	)
+}
 
-  return (
-    <Container my={5} overflowX="hidden">
-      <Header title={title} />
-      {children}
-      <Box mt={1}>
-        <Text
-          textAlign="left"
-          fontWeight="700"
-          fontSize="sm"
-          colorScheme="gray"
-        >
-          © {new Date().getFullYear()}, Thien K. Phan
-        </Text>
-      </Box>
-    </Container>
-  );
-};
+const Footer = ({ children }) => {
+	return (
+		<Grid.Container justify="center">
+			<Grid xs sm={16}>
+				<Text h6>© {new Date().getFullYear()}, Thien K. Phan</Text>
+			</Grid>
+		</Grid.Container>
+	)
+}
+
+const Layout = ({ children, switchTheme }) => {
+	const title = 'thien k phan'
+
+	return (
+		<Page width="100%">
+			<Page.Header pt={1}>
+				<Header title={title} switchTheme={switchTheme} />
+			</Page.Header>
+			<Page.Content>
+				<Content>{children}</Content>
+			</Page.Content>
+			<Page.Footer>
+				<Footer />
+			</Page.Footer>
+		</Page>
+	)
+}
 
 export default Layout
