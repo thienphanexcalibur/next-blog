@@ -1,10 +1,20 @@
 import Link from 'next/link'
 import { Grid, Text, Page, useTheme, Button } from '@geist-ui/react'
 import { Moon, Sun, GitBranch } from '@geist-ui/react-icons'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 
 const Header = ({ title, switchTheme }) => {
 	const { type } = useTheme()
+	useEffect(() => {
+		const nextTheme = localStorage.getItem('theme')
+		if (!nextTheme) {
+			const mql = window.matchMedia('(prefers-color-scheme: dark)')
+			const systemPreference = mql.matches ? 'dark' : 'light'
+			switchTheme(systemPreference)
+		} else {
+			switchTheme(nextTheme)
+		}
+	}, [switchTheme])
 	return (
 		<Grid.Container gap={1} justify="center">
 			<Grid xs={24} sm={8} alignItems="center">
