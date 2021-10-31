@@ -4,6 +4,7 @@ import { promises as fs } from 'fs'
 import { Card, Grid, Text } from '@geist-ui/react'
 import path from 'path'
 import { useMemo } from 'react'
+import Head from 'next/head'
 
 export default function Home({ posts }) {
 	const sortedPosts = useMemo(
@@ -17,20 +18,25 @@ export default function Home({ posts }) {
 		[posts]
 	)
 	return (
-		<Grid.Container gap={2}>
-			{sortedPosts.map(
-				({ meta: { title, description, date }, filename }) => (
-					<Link key={title} href={`/post/${filename}`} passHref>
-						<Grid xs={24} sm={12}>
-							<Card key={title} width="100%">
-								<Text h4>{title}</Text>
-								<Text>{description}</Text>
-							</Card>
-						</Grid>
-					</Link>
-				)
-			)}
-		</Grid.Container>
+		<>
+			<Head>
+				<title>Thien K. Phan</title>
+			</Head>
+			<Grid.Container gap={2}>
+				{sortedPosts.map(
+					({ meta: { title, description, date }, filename }) => (
+						<Link key={title} href={`/post/${filename}`} passHref>
+							<Grid xs={24} sm={24} md={24} lg={12}>
+								<Card key={title} width="100%">
+									<Text h4>{title}</Text>
+									<Text>{description}</Text>
+								</Card>
+							</Grid>
+						</Link>
+					)
+				)}
+			</Grid.Container>
+		</>
 	)
 }
 

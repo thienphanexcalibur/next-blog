@@ -14,8 +14,8 @@ import {
 	Note,
 } from '@geist-ui/react'
 import dayjs from 'dayjs'
-import CodeBlock from '../components/CodeBlock'
-import Comment from '../components/Comment'
+import CodeBlock from '../../components/CodeBlock'
+import Comment from '../../components/Comment'
 import { useMemo } from 'react'
 
 const fs = require('fs')
@@ -53,12 +53,12 @@ const Post = ({ source, meta, slug }) => {
 				</div>
 			),
 			pre: (props) => <div {...props} />,
-			code: CodeBlock,
+			code: (props) => <CodeBlock {...props} theme={theme} />,
 			Keyboard,
 			Tag,
 			Note,
 		}
-	}, [])
+	}, [theme])
 	return (
 		<>
 			<Head>
@@ -78,8 +78,8 @@ const Post = ({ source, meta, slug }) => {
 				</Badge>
 			</Grid>
 			<Text h2>{meta.title}</Text>
-			<MDXRemote {...source} components={components} />
-			<Comment />
+			<MDXRemote {...source} components={components} scope={meta} />
+			<Comment key={theme.type} />
 		</>
 	)
 }
@@ -100,7 +100,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
 	}
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = () => {
 	const filenames = fs.readdirSync(path.resolve(process.cwd(), 'blog'))
 	const paths = filenames.map((filename) => ({
 		params: {
@@ -109,7 +109,7 @@ export const getStaticPaths = async () => {
 	}))
 	return {
 		paths,
-		fallback: true,
+		fallback: false,
 	}
 }
 

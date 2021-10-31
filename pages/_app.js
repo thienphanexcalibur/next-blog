@@ -1,15 +1,28 @@
+import { ThemeManager } from '@/utils'
 import { GeistProvider, CssBaseline } from '@geist-ui/react'
-import { useCallback, useEffect, useState } from 'react'
-import Layout from './components/layout'
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useState,
+} from 'react'
+import Layout from '../components/layout'
+
+const { persistTheme, getInitialTheme } = new ThemeManager('theme')
 
 export default function Entry({ Component, pageProps }) {
 	const [theme, setTheme] = useState('light')
 
-	const switchTheme = useCallback((themeType) => {
+	useEffect(() => {
+		setTheme(getInitialTheme())
+	}, [])
+
+	const switchTheme = useCallback(() => {
 		setTheme((prev) => {
 			const nextTheme = prev === 'light' ? 'dark' : 'light'
-			localStorage.setItem('theme', nextTheme)
-			return themeType || nextTheme
+			persistTheme(nextTheme)
+			return nextTheme
 		})
 	}, [])
 

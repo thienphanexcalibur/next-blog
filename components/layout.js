@@ -3,18 +3,10 @@ import { Grid, Text, Page, useTheme, Button } from '@geist-ui/react'
 import { Moon, Sun, GitBranch } from '@geist-ui/react-icons'
 import { useCallback, useEffect } from 'react'
 
-const Header = ({ title, switchTheme }) => {
+const Header = ({ switchTheme }) => {
 	const { type } = useTheme()
-	useEffect(() => {
-		const nextTheme = localStorage.getItem('theme')
-		if (!nextTheme) {
-			const mql = window.matchMedia('(prefers-color-scheme: dark)')
-			const systemPreference = mql.matches ? 'dark' : 'light'
-			switchTheme(systemPreference)
-		} else {
-			switchTheme(nextTheme)
-		}
-	}, [switchTheme])
+	const title = 'thien k phan'
+
 	return (
 		<Grid.Container gap={1} justify="center">
 			<Grid xs={24} sm={8} alignItems="center">
@@ -67,12 +59,10 @@ const Footer = ({ children }) => {
 }
 
 const Layout = ({ children, switchTheme }) => {
-	const title = 'thien k phan'
-
 	return (
 		<Page width="100%">
 			<Page.Header pt={1}>
-				<Header title={title} switchTheme={switchTheme} />
+				<Header switchTheme={switchTheme} />
 			</Page.Header>
 			<Page.Content>
 				<Content>{children}</Content>

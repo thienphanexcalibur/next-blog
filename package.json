@@ -9,17 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^1.0.15",
-    "@chakra-ui/react": "^1.6.8",
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
     "@geist-ui/react": "^2.2.0",
     "@geist-ui/react-icons": "^1.0.1",
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^11.1.2",
     "dayjs": "^1.10.7",
-    "framer-motion": "^4",
     "gray-matter": "^4.0.3",
     "next": "11.1.2",
     "next-mdx-remote": "^3.0.5",

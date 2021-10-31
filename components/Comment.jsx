@@ -1,16 +1,12 @@
-import { useColorMode } from '@chakra-ui/react'
 import React, { useCallback, useEffect, useRef } from 'react'
-import Script from 'next/script'
 import { useTheme } from '@geist-ui/react'
 
 const Comment = () => {
 	const { type } = useTheme()
-
 	const commentRef = useCallback(
 		(node) => {
 			const script = document.createElement('script')
 			if (node && type) {
-				node.innerHTML = ''
 				const theme = `github-${type}`
 				const attributes = {
 					src: `https://utteranc.es/client.js?v=${Math.round(
@@ -32,9 +28,9 @@ const Comment = () => {
 	)
 
 	return (
-		<>
-			<div ref={commentRef} />
-		</>
+		<div>
+			<div ref={commentRef} id="comment" />
+		</div>
 	)
 }
 

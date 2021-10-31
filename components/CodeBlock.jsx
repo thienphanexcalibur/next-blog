@@ -6,9 +6,8 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import { Grid, useTheme } from '@geist-ui/react'
 import { mdx } from '@mdx-js/react'
 
-export default function CodeBlock({ children, className, live }) {
-	const language = className.replace(/language-/, '')
-	const { type } = useTheme()
+export default function CodeBlock({ children, className, live, theme }) {
+	const language = className?.replace(/language-/, '') ?? ''
 
 	if (live) {
 		return (
@@ -30,7 +29,7 @@ export default function CodeBlock({ children, className, live }) {
 				{...defaultProps}
 				code={children}
 				language={language}
-				theme={type === 'light' ? github : nightOwl}
+				theme={theme.type === 'light' ? github : nightOwl}
 			>
 				{({
 					className,
