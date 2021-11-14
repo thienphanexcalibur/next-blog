@@ -56,6 +56,9 @@ export default function Home({ posts }) {
 													layout="responsive"
 													width="100%"
 													height="30px"
+													priority
+													placeholder="blur"
+													blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8/eR2PQAIVwMbEwfT0QAAAABJRU5ErkJggg=="
 													objectFit="cover"
 													alt={title}
 												/>

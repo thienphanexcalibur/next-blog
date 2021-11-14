@@ -54,6 +54,9 @@ const Post = ({ source, meta, slug }) => {
 						src={src}
 						layout="fill"
 						alt={alt}
+						priority
+						placeholder="blur"
+						blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8/eR2PQAIVwMbEwfT0QAAAABJRU5ErkJggg=="
 						objectFit="contain"
 					/>
 				</ImgContainer>
