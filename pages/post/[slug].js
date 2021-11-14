@@ -18,6 +18,7 @@ import dayjs from 'dayjs'
 import CodeBlock from '../../components/CodeBlock'
 import Comment from '../../components/Comment'
 import { useMemo } from 'react'
+import { NextSeo } from 'next-seo'
 
 const fs = require('fs')
 const path = require('path')
@@ -66,9 +67,31 @@ const Post = ({ source, meta, slug }) => {
 	}, [theme])
 	return (
 		<>
+			<NextSeo
+				title={meta.title}
+				description={meta.description}
+				canonical="https://www.canonical.ie/"
+				openGraph={{
+					url: `https://thienkphan.com/post/${slug}`,
+					title: meta.title,
+					description: meta.description,
+					images: [
+						{
+							url: `https://thienkphan.com${meta.cover}`,
+							width: 800,
+							height: 100,
+							alt: meta.title,
+							type: 'image/jpeg',
+						},
+					],
+					site_name: 'thienkphan',
+				}}
+			/>
 			<Head>
 				<title>{meta.title}</title>
 			</Head>
+
+			<Text h2>{meta.title}</Text>
 			<Grid mb={1}>
 				<Badge
 					type="success"
@@ -82,7 +105,6 @@ const Post = ({ source, meta, slug }) => {
 					{dayjs(meta.date).format('MMMM DD YYYY')}
 				</Badge>
 			</Grid>
-			<Text h2>{meta.title}</Text>
 			<MDXRemote {...source} components={components} scope={meta} />
 			<Comment key={theme.type} />
 		</>

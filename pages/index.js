@@ -1,10 +1,26 @@
 import matter from 'gray-matter'
-import Link from 'next/link'
+import { default as NextLink } from 'next/link'
+import Image from 'next/image'
 import { promises as fs } from 'fs'
-import { Card, Grid, Text } from '@geist-ui/react'
+import { Card, Grid, Text, Link, Spacer } from '@geist-ui/react'
+import { ArrowRightCircleFill } from '@geist-ui/react-icons'
 import path from 'path'
 import { useMemo } from 'react'
 import Head from 'next/head'
+import styled from 'styled-components'
+
+const readingTime = (content) => {
+	const wpm = 225
+	const words = content.trim().split(/\s+/).length
+	const time = Math.ceil(words / wpm)
+	return time
+}
+
+const ReadButton = styled(Link)`
+	display: flex;
+	align-items: center !important;
+	justify-content: center;
+`
 
 export default function Home({ posts }) {
 	const sortedPosts = useMemo(
@@ -24,15 +40,42 @@ export default function Home({ posts }) {
 			</Head>
 			<Grid.Container gap={2}>
 				{sortedPosts.map(
-					({ meta: { title, description, date }, filename }) => (
-						<Link key={title} href={`/post/${filename}`} passHref>
-							<Grid xs={24} sm={24} md={24} lg={12}>
-								<Card key={title} width="100%">
-									<Text h4>{title}</Text>
-									<Text>{description}</Text>
-								</Card>
-							</Grid>
-						</Link>
+					({
+						meta: { title, description, date, cover },
+						filename,
+						readTime,
+					}) => (
+						<Grid xs={24} sm={24} md={24} lg={12} key={title}>
+							<NextLink href={`/post/${filename}`}>
+								<Link>
+									<Card hoverable>
+										<Card.Content>
+											{cover && (
+												<Image
+													src={cover}
+													layout="responsive"
+													width="100%"
+													height="30px"
+													objectFit="cover"
+													alt={title}
+												/>
+											)}
+											<Spacer h={1} />
+											<Text h4>{title}</Text>
+											<Text>{description}</Text>
+										</Card.Content>
+										<Card.Footer>
+											<ReadButton block align="center">
+												<ArrowRightCircleFill
+													size={18}
+												/>
+												{readTime} minutes read
+											</ReadButton>
+										</Card.Footer>
+									</Card>
+								</Link>
+							</NextLink>
+						</Grid>
 					)
 				)}
 			</Grid.Container>
@@ -53,15 +96,16 @@ export async function getStaticProps() {
 			return {
 				raw,
 				filename: fileDir,
+				readTime: readingTime(raw),
 			}
 		})
 	)
 
 	return {
 		props: {
-			posts: file.map(({ raw, filename }) => {
+			posts: file.map(({ raw, filename, readTime }) => {
 				const { data: meta } = matter(raw)
-				return { meta, filename }
+				return { meta, filename, readTime }
 			}),
 		},
 	}
