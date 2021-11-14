@@ -7,7 +7,7 @@ export default class ThemeManager {
 	}
 
 	getPersistTheme() {
-		return localStorage.getItem(this.namespace)
+		return window.localStorage.getItem(this.namespace)
 	}
 
 	getSystemPreference() {
@@ -21,6 +21,6 @@ export default class ThemeManager {
 	}
 
 	persistTheme(theme) {
-		localStorage.setItem(this.namespace, theme)
+		window.localStorage.setItem(this.namespace, theme)
 	}
 }

@@ -1,12 +1,6 @@
 import { ThemeManager } from '@/utils'
 import { GeistProvider, CssBaseline } from '@geist-ui/react'
-import {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useState,
-} from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Layout from '../components/layout'
 
 const { persistTheme, getInitialTheme } = new ThemeManager('theme')
@@ -27,11 +21,13 @@ export default function Entry({ Component, pageProps }) {
 	}, [])
 
 	return (
-		<GeistProvider themeType={theme}>
-			<CssBaseline />
-			<Layout switchTheme={switchTheme}>
-				<Component {...pageProps} />
-			</Layout>
-		</GeistProvider>
+		<>
+			<GeistProvider themeType={theme}>
+				<CssBaseline />
+				<Layout switchTheme={switchTheme}>
+					<Component {...pageProps} />
+				</Layout>
+			</GeistProvider>
+		</>
 	)
 }
