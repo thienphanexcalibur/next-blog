@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import matter from 'gray-matter'
 import Head from 'next/head'
 import Image from 'next/image'
+import styled from 'styled-components'
 import {
 	Text,
 	Code,
@@ -20,6 +21,12 @@ import { useMemo } from 'react'
 
 const fs = require('fs')
 const path = require('path')
+
+const ImgContainer = styled.div`
+	position: relative;
+	width: ${(props) => props.width ?? '100%'};
+	height: ${(props) => props.height ?? '500px'};
+`
 
 const heading = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 	.map((item) => {
@@ -41,16 +48,14 @@ const Post = ({ source, meta, slug }) => {
 			...heading,
 			p: Text,
 			img: ({ src, alt }) => (
-				<div>
+				<ImgContainer>
 					<Image
 						src={src}
-						width="100%"
-						height="100%"
-						layout="responsive"
-						objectFit="contain"
+						layout="fill"
 						alt={alt}
+						objectFit="contain"
 					/>
-				</div>
+				</ImgContainer>
 			),
 			pre: (props) => <div {...props} />,
 			code: (props) => <CodeBlock {...props} theme={theme} />,
