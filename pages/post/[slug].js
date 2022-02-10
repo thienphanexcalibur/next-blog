@@ -96,17 +96,9 @@ const Post = ({ source, meta, slug }) => {
 
 			<Text h2>{meta.title}</Text>
 			<Grid mb={1}>
-				<Badge
-					type="success"
-					style={{
-						backgroundColor:
-							theme.type === 'light'
-								? theme.palette.successLight
-								: theme.palette.successDark,
-					}}
-				>
+				<Text type="success" p b>
 					{dayjs(meta.date).format('MMMM DD YYYY')}
-				</Badge>
+				</Text>
 			</Grid>
 			<MDXRemote {...source} components={components} scope={meta} />
 			<Comment key={theme.type} />

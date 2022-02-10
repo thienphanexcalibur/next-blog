@@ -2,24 +2,31 @@ import matter from 'gray-matter'
 import { default as NextLink } from 'next/link'
 import Image from 'next/image'
 import { promises as fs } from 'fs'
-import { Card, Grid, Text, Link, Spacer } from '@geist-ui/react'
-import { ArrowRightCircleFill } from '@geist-ui/react-icons'
+import { Grid, Text, Fieldset } from '@geist-ui/react'
 import path from 'path'
 import { useMemo } from 'react'
 import Head from 'next/head'
 import styled from 'styled-components'
+import dayjs from 'dayjs'
 
-const readingTime = (content) => {
+const getReadingTime = (content) => {
 	const wpm = 225
 	const words = content.trim().split(/\s+/).length
 	const time = Math.ceil(words / wpm)
 	return time
 }
 
-const ReadButton = styled(Link)`
+const Meta = styled.div`
 	display: flex;
-	align-items: center !important;
-	justify-content: center;
+	align-items: center;
+	justify-content: space-between;
+`
+const Hoverable = styled.div`
+	&:hover {
+		cursor: pointer;
+	}
+	width: 100%;
+	display: flex;
 `
 
 export default function Home({ posts }) {
@@ -38,18 +45,18 @@ export default function Home({ posts }) {
 			<Head>
 				<title>Thien K. Phan</title>
 			</Head>
-			<Grid.Container gap={2}>
+			<Grid.Container gap={3}>
 				{sortedPosts.map(
 					({
 						meta: { title, description, date, cover },
 						filename,
 						readTime,
 					}) => (
-						<Grid xs={24} sm={24} md={24} lg={12} key={title}>
-							<NextLink href={`/post/${filename}`}>
-								<Link>
-									<Card hoverable>
-										<Card.Content>
+						<Grid xs={24} md={12} key={title}>
+							<NextLink href={`/post/${filename}`} width="100%">
+								<Hoverable>
+									<Fieldset width="100%" display="flex">
+										<Fieldset.Content padding={0}>
 											{cover && (
 												<Image
 													src={cover}
@@ -63,20 +70,41 @@ export default function Home({ posts }) {
 													alt={title}
 												/>
 											)}
-											<Spacer h={1} />
-											<Text h4>{title}</Text>
-											<Text>{description}</Text>
-										</Card.Content>
-										<Card.Footer>
-											<ReadButton block align="center">
-												<ArrowRightCircleFill
-													size={18}
-												/>
-												{readTime} minutes read
-											</ReadButton>
-										</Card.Footer>
-									</Card>
-								</Link>
+										</Fieldset.Content>
+										<Fieldset.Content pt="10px">
+											<Meta>
+												<Text
+													font="12px"
+													type="success"
+													p
+													b
+												>
+													{readTime} minutes read
+												</Text>
+
+												<Text
+													font="12px"
+													my={0}
+													p
+													b
+													type="secondary"
+												>
+													{dayjs(date).format(
+														'YYYY-MM-DD'
+													)}
+												</Text>
+											</Meta>
+											<Fieldset.Title>
+												{title}
+											</Fieldset.Title>
+											<Fieldset.Subtitle>
+												<Text my={0}>
+													{description}
+												</Text>
+											</Fieldset.Subtitle>
+										</Fieldset.Content>
+									</Fieldset>
+								</Hoverable>
 							</NextLink>
 						</Grid>
 					)
@@ -99,7 +127,7 @@ export async function getStaticProps() {
 			return {
 				raw,
 				filename: fileDir,
-				readTime: readingTime(raw),
+				readTime: getReadingTime(raw),
 			}
 		})
 	)

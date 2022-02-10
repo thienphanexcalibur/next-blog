@@ -9,12 +9,12 @@ const Header = ({ switchTheme }) => {
 
 	return (
 		<Grid.Container gap={1} justify="center">
-			<Grid xs={24} sm={8} alignItems="center">
+			<Grid xs={12} sm={8} alignItems="center">
 				<Text h3 p="0" margin="0">
 					<Link href="/">{title}</Link>
 				</Text>
 			</Grid>
-			<Grid xs={24} sm={8} alignItems="center" justify="flex-end">
+			<Grid xs={12} sm={8} justify="flex-end" alignItems="center">
 				<Button
 					w="70px"
 					mr={1}

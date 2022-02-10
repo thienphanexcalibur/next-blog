@@ -1,0 +1,60 @@
+---
+title: Smart Contract Development (1)
+description: Genesis
+date: '2022-02-08T18:45:28.029Z'
+cover: /cover/first-smart-contract-cover.jpeg
+---
+
+## Goals:
+
+-   Understand smart contract proxies (embrace immutability), how it use assembly codes to delegate OPCODES.
+-   Get really good at solidity
+-   Tokenomics
+
+## Development Notes
+
+**1. Development Server:**
+
+I started using [Ganache](https://trufflesuite.com/ganache/) as Ethereum local node, now I moved on using [Go Ethereum](https://geth.ethereum.org/)
+
+**2. Run:**
+
+``` bash
+geth --http --http.corsdomain="*" --http.api web3,eth,debug,personal,net --vmdebug --datadir $HOME/persist-geth --dev console --allow-insecure-unlock
+```
+
+where `persist-geth` is the _geth persistence folder_
+
+Spawns a local EVM node at `8545`.
+
+Connect with Metamask with chain ID `1337`
+
+#### Some notes on `--allow-insecure-lock`:
+
+I was trying to making some transactions with some newly created accounts in geth node, the command to create new account:
+
+``` bash
+geth account new --datadir $HOME/persist-geth
+```
+
+Error will happen when the account is not unlocked.
+
+```
+creation of xxxx errored: Returned error: authentication needed: password or unlock
+```
+
+**👀 Reason:**
+
+[Unlock Account](https://web3js.readthedocs.io/en/v1.2.11/web3-eth-personal.html#unlockaccount) is forbidden via when connecting to node via HTTP.
+
+See PR: https://github.com/ethereum/go-ethereum/pull/17037
+
+**🏁 Solutions:**
+
+Run with web3 API to unlock the account.
+
+```bash
+web3.personal.accounts.unlockAccount("0x....", "SAFE-PASSWORD-BLAH-BLAH", null)
+```
+
+Duration time `null` is OK, for development I need the account to be unlocked indefinitely.

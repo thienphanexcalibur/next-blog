@@ -12,9 +12,11 @@ export default function CodeBlock({ children, className, live, theme }) {
 	if (live) {
 		return (
 			<Grid>
-				<LiveProvider code={children.trim()}
-          transformCode={code => '/** @jsx mdx */' + code}
-          scope={{mdx}}>
+				<LiveProvider
+					code={children.trim()}
+					transformCode={(code) => '/** @jsx mdx */' + code}
+					scope={{ mdx }}
+				>
 					<LivePreview />
 					<LiveEditor />
 					<LiveError />
