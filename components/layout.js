@@ -1,24 +1,6 @@
 import Link from 'next/link'
-import {
-	Grid,
-	Text,
-	Page,
-	useTheme,
-	Button,
-	useModal,
-	ButtonGroup,
-	Spacer,
-} from '@geist-ui/react'
-import {
-	Moon,
-	Sun,
-	GitBranch,
-	Linkedin,
-	Github,
-	Facebook,
-} from '@geist-ui/react-icons'
-import { useCallback, useEffect } from 'react'
-import ContactModal from './ContactModal'
+import { Grid, Text, Page, useTheme, Button, Spacer } from '@geist-ui/react'
+import { Moon, Sun, Linkedin, Github, Facebook } from '@geist-ui/react-icons'
 
 const Header = ({ switchTheme }) => {
 	const { type } = useTheme()
