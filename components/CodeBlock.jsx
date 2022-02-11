@@ -29,7 +29,7 @@ export default function CodeBlock({ children, className, live, theme }) {
 		<>
 			<Highlight
 				{...defaultProps}
-				code={children}
+				code={children.trim()}
 				language={language}
 				theme={theme.type === 'light' ? github : nightOwl}
 			>
