@@ -2,7 +2,7 @@ import matter from 'gray-matter'
 import { default as NextLink } from 'next/link'
 import Image from 'next/image'
 import { promises as fs } from 'fs'
-import { Grid, Text, Fieldset } from '@geist-ui/react'
+import { Grid, Text, Card } from '@geist-ui/react'
 import path from 'path'
 import { useMemo } from 'react'
 import Head from 'next/head'
@@ -55,8 +55,8 @@ export default function Home({ posts }) {
 						<Grid xs={24} md={12} key={title}>
 							<NextLink href={`/post/${filename}`} width="100%">
 								<Hoverable>
-									<Fieldset width="100%" display="flex">
-										<Fieldset.Content padding={0}>
+									<Card width="100%" display="flex" shadow hoverable>
+										<Card.Content padding={0}>
 											{cover && (
 												<Image
 													src={cover}
@@ -70,8 +70,8 @@ export default function Home({ posts }) {
 													alt={title}
 												/>
 											)}
-										</Fieldset.Content>
-										<Fieldset.Content pt="10px">
+										</Card.Content>
+										<Card.Content pt="10px">
 											<Meta>
 												<Text
 													font="12px"
@@ -94,16 +94,10 @@ export default function Home({ posts }) {
 													)}
 												</Text>
 											</Meta>
-											<Fieldset.Title>
-												{title}
-											</Fieldset.Title>
-											<Fieldset.Subtitle>
-												<Text my={0}>
-													{description}
-												</Text>
-											</Fieldset.Subtitle>
-										</Fieldset.Content>
-									</Fieldset>
+											<Text h4> {title}</Text>
+											<Text p font="14px" my={0}>{description}</Text>
+										</Card.Content>
+									</Card>
 								</Hoverable>
 							</NextLink>
 						</Grid>
