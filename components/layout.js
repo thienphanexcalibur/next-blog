@@ -1,7 +1,24 @@
 import Link from 'next/link'
-import { Grid, Text, Page, useTheme, Button } from '@geist-ui/react'
-import { Moon, Sun, GitBranch } from '@geist-ui/react-icons'
+import {
+	Grid,
+	Text,
+	Page,
+	useTheme,
+	Button,
+	useModal,
+	ButtonGroup,
+	Spacer,
+} from '@geist-ui/react'
+import {
+	Moon,
+	Sun,
+	GitBranch,
+	Linkedin,
+	Github,
+	Facebook,
+} from '@geist-ui/react-icons'
 import { useCallback, useEffect } from 'react'
+import ContactModal from './ContactModal'
 
 const Header = ({ switchTheme }) => {
 	const { type } = useTheme()
@@ -16,20 +33,9 @@ const Header = ({ switchTheme }) => {
 			</Grid>
 			<Grid xs={12} sm={8} justify="flex-end" alignItems="center">
 				<Button
-					w="70px"
-					mr={1}
-					h={0.7}
-					auto
-					icon={<GitBranch />}
-					scale={2 / 3}
-				>
-					Contact me
-				</Button>
-				<Button
-					type="abort"
 					h={0.7}
 					onClick={switchTheme}
-					iconRight={type === 'light' ? <Sun /> : <Moon />}
+					icon={type === 'light' ? <Sun /> : <Moon />}
 					auto
 					scale={2 / 3}
 				/>
@@ -40,7 +46,7 @@ const Header = ({ switchTheme }) => {
 
 const Content = ({ children }) => {
 	return (
-		<Grid.Container justify="center">
+		<Grid.Container justify="center" mb={2}>
 			<Grid xs sm={16} direction="column">
 				{children}
 			</Grid>
@@ -50,17 +56,49 @@ const Content = ({ children }) => {
 
 const Footer = ({ children }) => {
 	return (
-		<Grid.Container justify="center">
-			<Grid xs sm={16}>
-				<Text h6>© {new Date().getFullYear()}, Thien K. Phan</Text>
-			</Grid>
-		</Grid.Container>
+		<>
+			<Grid.Container justify="center">
+				<Grid xs={12} sm={8} alignItems="center">
+					<Text font="12px" type="secondary" b m={0} p={0}>
+						© {new Date().getFullYear()}, Thien K. Phan
+					</Text>
+				</Grid>
+				<Grid xs={12} sm={8} justify="flex-end" pr={2}>
+					<Linkedin
+						onClick={() =>
+							window.open(
+								'https://www.linkedin.com/in/phankhanhthien/'
+							)
+						}
+						size={16}
+						cursor="pointer"
+					/>
+					<Spacer inline={0.35} />
+					<Github
+						onClick={() =>
+							wincow.open('https://www.facebook.com/ThienFoster')
+						}
+						size={16}
+						cursor="pointer"
+					/>
+					<Spacer inline={0.35} />
+					<Facebook
+						onClick={() =>
+							window.open('https://github.com/thienphanexcalibur')
+						}
+						size={16}
+						cursor="pointer"
+					/>
+				</Grid>
+			</Grid.Container>
+			<Spacer h={2} />
+		</>
 	)
 }
 
 const Layout = ({ children, switchTheme }) => {
 	return (
-		<Page width="100%">
+		<Page width="100%" x>
 			<Page.Header pt={1}>
 				<Header switchTheme={switchTheme} />
 			</Page.Header>
