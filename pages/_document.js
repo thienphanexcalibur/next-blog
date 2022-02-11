@@ -1,9 +1,11 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import { ServerStyleSheet } from "styled-components";
 import { CssBaseline } from '@geist-ui/react'
 
 class MyDocument extends Document {
 	static async getInitialProps(ctx) {
 		const initialProps = await Document.getInitialProps(ctx)
+		const sheet = new ServerStyleSheet();
 		const styles = CssBaseline.flush()
 		return {
 			...initialProps,
@@ -11,6 +13,7 @@ class MyDocument extends Document {
 				<>
 					{initialProps.styles}
 					{styles}
+					{sheet.getStyleElement()}
 				</>
 			),
 		}
