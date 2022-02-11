@@ -4,16 +4,7 @@ import matter from 'gray-matter'
 import Head from 'next/head'
 import Image from 'next/image'
 import styled from 'styled-components'
-import {
-	Text,
-	Code,
-	Badge,
-	useTheme,
-	Grid,
-	Keyboard,
-	Tag,
-	Note,
-} from '@geist-ui/react'
+import { Text, useTheme, Grid, Keyboard, Tag, Note } from '@geist-ui/react'
 import dayjs from 'dayjs'
 import CodeBlock from '../../components/CodeBlock'
 import Comment from '../../components/Comment'

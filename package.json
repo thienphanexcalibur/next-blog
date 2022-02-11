@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@geist-ui/core": "^2.3.0",
     "@geist-ui/react": "^2.2.0",
     "@geist-ui/react-icons": "^1.0.1",
     "@mdx-js/loader": "^1.6.22",

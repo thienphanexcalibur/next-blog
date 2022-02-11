@@ -134,10 +134,15 @@ export async function getStaticProps() {
 
 	return {
 		props: {
-			posts: file.map(({ raw, filename, readTime }) => {
-				const { data: meta } = matter(raw)
-				return { meta, filename, readTime }
-			}),
+			posts: file
+				.map(({ raw, filename, readTime }) => {
+					const { data: meta } = matter(raw)
+					if (meta.hidden) {
+						return null
+					}
+					return { meta, filename, readTime }
+				})
+				.filter(Boolean),
 		},
 	}
 }
