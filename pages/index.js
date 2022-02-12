@@ -22,11 +22,23 @@ const Meta = styled.div`
 	justify-content: space-between;
 `
 const Hoverable = styled.div`
+	.card {
+		border-radius: 13px;
+	}
+	.content {
+		.thumbnail {
+			border-radius: 13px 13px 0 0;
+		}
+	}
 	&:hover {
 		cursor: pointer;
 	}
 	width: 100%;
 	display: flex;
+`
+
+const StyledCard = styled(Card)`
+	border-radius: 25px;
 `
 
 export default function Home({ posts }) {
@@ -55,10 +67,16 @@ export default function Home({ posts }) {
 						<Grid xs={24} md={12} key={title}>
 							<NextLink href={`/post/${filename}`} width="100%">
 								<Hoverable>
-									<Card width="100%" display="flex" shadow hoverable>
+									<Card
+										width="100%"
+										display="flex"
+										shadow
+										hoverable
+									>
 										<Card.Content padding={0}>
 											{cover && (
 												<Image
+													className="thumbnail"
 													src={cover}
 													layout="responsive"
 													width="100%"
@@ -94,7 +112,9 @@ export default function Home({ posts }) {
 												</Text>
 											</Meta>
 											<Text h4> {title}</Text>
-											<Text p font="14px" my={0}>{description}</Text>
+											<Text p font="14px" my={0}>
+												{description}
+											</Text>
 										</Card.Content>
 									</Card>
 								</Hoverable>
