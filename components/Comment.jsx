@@ -9,10 +9,8 @@ const Comment = () => {
 			if (node && type) {
 				const theme = `github-${type}`
 				const attributes = {
-					src: `https://utteranc.es/client.js?v=${Math.round(
-						Math.random() * 1000
-					)}`,
-					repo: 'thienphanexcalibur/personal-blog',
+					src: `https://utteranc.es/client.js`,
+					repo: 'thienphanexcalibur/next-blog',
 					['issue-term']: 'title',
 					theme,
 					crossorigin: 'anonymous',

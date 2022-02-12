@@ -64,7 +64,11 @@ const Post = ({ source, meta, slug }) => {
 			<NextSeo
 				title={meta.title}
 				description={meta.description}
-				canonical="https://www.canonical.ie/"
+				canonical={
+					process.env.NODE_ENV === 'development'
+						? `http://localhost:3000/post/${slug}`
+						: `https://thienkphan.com/post/${slug}`
+				}
 				openGraph={{
 					url: `https://thienkphan.com/post/${slug}`,
 					title: meta.title,
