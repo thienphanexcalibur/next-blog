@@ -103,5 +103,6 @@ export async function getStaticProps() {
 				.filter(Boolean),
 			notionPosts,
 		},
+		revalidate: 10, // In seconds
 	}
 }

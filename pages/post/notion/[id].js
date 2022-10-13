@@ -21,17 +21,15 @@ const NotionPage = ({ recordMap }) => {
 				<title>{title}</title>
 			</Head>
 			<h2>{title}</h2>
-			<div>
-				<NotionRenderer
-					recordMap={recordMap}
-					fullPage={false}
-					components={{
-						nextImage: Image,
-						nextLink: Link,
-					}}
-					darkMode={isDark}
-				/>
-			</div>
+			<NotionRenderer
+				recordMap={recordMap}
+				fullPage={false}
+				components={{
+					nextImage: Image,
+					nextLink: Link,
+				}}
+				darkMode={isDark}
+			/>
 			<Comment key={theme.type} />
 		</>
 	)
