@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback } from 'react'
 import { useTheme } from '@geist-ui/react'
 
 const Comment = () => {

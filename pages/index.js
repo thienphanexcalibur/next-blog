@@ -1,47 +1,15 @@
 import matter from 'gray-matter'
-import { default as NextLink } from 'next/link'
-import Image from 'next/image'
 import { promises as fs } from 'fs'
-import { Grid, Text, Card } from '@geist-ui/react'
+import { Grid } from '@geist-ui/react'
 import path from 'path'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import Head from 'next/head'
-import styled from 'styled-components'
-import dayjs from 'dayjs'
+import { getAllPagesInSpace } from '@/utils/notion'
+import { getPageImageUrls, getPageProperty, getPageTitle } from 'notion-utils'
+import MarkdownPost from '@/components/Posts/MarkdownPost'
+import NotionPost from '@/components/Posts/NotionPost'
 
-const getReadingTime = (content) => {
-	const wpm = 225
-	const words = content.trim().split(/\s+/).length
-	const time = Math.ceil(words / wpm)
-	return time
-}
-
-const Meta = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-`
-const Hoverable = styled.div`
-	.card {
-		border-radius: 13px;
-	}
-	.content {
-		.thumbnail {
-			border-radius: 13px 13px 0 0;
-		}
-	}
-	&:hover {
-		cursor: pointer;
-	}
-	width: 100%;
-	display: flex;
-`
-
-const StyledCard = styled(Card)`
-	border-radius: 25px;
-`
-
-export default function Home({ posts }) {
+export default function Home({ posts, notionPosts }) {
 	const sortedPosts = useMemo(
 		() =>
 			posts.slice().sort((a, b) => {
@@ -52,76 +20,32 @@ export default function Home({ posts }) {
 			}),
 		[posts]
 	)
+
+	useEffect(() => {
+		console.log(notionPosts)
+	}, [notionPosts])
 	return (
 		<>
 			<Head>
 				<title>Thien K. Phan</title>
 			</Head>
 			<Grid.Container gap={3}>
-				{sortedPosts.map(
-					({
-						meta: { title, description, date, cover },
-						filename,
-						readTime,
-					}) => (
-						<Grid xs={24} md={12} key={title}>
-							<NextLink href={`/post/${filename}`} width="100%">
-								<Hoverable>
-									<Card
-										width="100%"
-										display="flex"
-										shadow
-										hoverable
-									>
-										<Card.Content padding={0}>
-											{cover && (
-												<Image
-													className="thumbnail"
-													src={cover}
-													layout="responsive"
-													width="100%"
-													height="30px"
-													placeholder="blur"
-													blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8/eR2PQAIVwMbEwfT0QAAAABJRU5ErkJggg=="
-													objectFit="cover"
-													alt={title}
-												/>
-											)}
-										</Card.Content>
-										<Card.Content pt="10px">
-											<Meta>
-												<Text
-													font="12px"
-													type="success"
-													p
-													b
-												>
-													{readTime} minutes read
-												</Text>
-
-												<Text
-													font="12px"
-													my={0}
-													p
-													b
-													type="secondary"
-												>
-													{dayjs(date).format(
-														'YYYY-MM-DD'
-													)}
-												</Text>
-											</Meta>
-											<Text h4> {title}</Text>
-											<Text p font="14px" my={0}>
-												{description}
-											</Text>
-										</Card.Content>
-									</Card>
-								</Hoverable>
-							</NextLink>
-						</Grid>
-					)
-				)}
+				{notionPosts.map((post) => (
+					<NotionPost
+						key={post.id}
+						id={post.id}
+						title={post.title}
+						cover={`https://notion.so${post.cover}`}
+					/>
+				))}
+				{sortedPosts.map((post) => (
+					<MarkdownPost
+						key={post.filename}
+						meta={post.meta}
+						filename={post.filename}
+						readTime={post.readTime}
+					/>
+				))}
 			</Grid.Container>
 		</>
 	)
@@ -130,6 +54,13 @@ export default function Home({ posts }) {
 export async function getStaticProps() {
 	const blogPath = path.resolve(process.cwd(), './blog')
 	const dirs = await fs.readdir(blogPath)
+
+	const getReadingTime = (content) => {
+		const wpm = 225
+		const words = content.trim().split(/\s+/).length
+		const time = Math.ceil(words / wpm)
+		return time
+	}
 
 	const file = await Promise.all(
 		dirs.map(async (fileDir) => {
@@ -145,6 +76,20 @@ export async function getStaticProps() {
 		})
 	)
 
+	const notionPostIds = await getAllPagesInSpace()
+
+	const notionPosts = Object.keys(notionPostIds).map((item) => {
+		const recordMap = notionPostIds[item]
+		const imageUrls = getPageImageUrls(recordMap, {
+			mapImageUrl: (url) => url,
+		})
+		return {
+			title: getPageTitle(recordMap),
+			cover: imageUrls?.length > 0 ? imageUrls[0] : null,
+			id: item,
+		}
+	})
+
 	return {
 		props: {
 			posts: file
@@ -156,6 +101,7 @@ export async function getStaticProps() {
 					return { meta, filename, readTime }
 				})
 				.filter(Boolean),
+			notionPosts,
 		},
 	}
 }
