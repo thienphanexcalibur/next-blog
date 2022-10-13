@@ -17,7 +17,6 @@ export const getAllPagesInSpace = async () => {
 		},
 		{
 			traverseCollections: false,
-			concurrency: 3
 		}
 	)
 	return pages

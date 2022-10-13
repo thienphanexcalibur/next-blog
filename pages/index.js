@@ -5,7 +5,8 @@ import path from 'path'
 import { useEffect, useMemo } from 'react'
 import Head from 'next/head'
 import { getAllPagesInSpace } from '@/utils/notion'
-import { getPageImageUrls, getPageProperty, getPageTitle } from 'notion-utils'
+import { normalizeNotionCoverPath } from '@/utils/post'
+import { getPageImageUrls, getPageTitle } from 'notion-utils'
 import MarkdownPost from '@/components/Posts/MarkdownPost'
 import NotionPost from '@/components/Posts/NotionPost'
 
@@ -35,7 +36,7 @@ export default function Home({ posts, notionPosts }) {
 						key={post.id}
 						id={post.id}
 						title={post.title}
-						cover={`https://notion.so${post.cover}`}
+						cover={normalizeNotionCoverPath(post.cover)}
 					/>
 				))}
 				{sortedPosts.map((post) => (
@@ -89,6 +90,8 @@ export async function getStaticProps() {
 			id: item,
 		}
 	})
+
+	notionPosts.shift()
 
 	return {
 		props: {

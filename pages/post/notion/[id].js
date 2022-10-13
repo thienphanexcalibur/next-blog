@@ -6,7 +6,7 @@ import 'react-notion-x/src/styles.css'
 import { useTheme } from '@geist-ui/react'
 import Comment from '@/components/Comment'
 import Head from 'next/head'
-import { getPageTitle } from 'notion-utils'
+import { getPageProperty, getPageTitle } from 'notion-utils'
 import { useEffect } from 'react'
 import { getAllPagesInSpace, getPage } from '@/utils/notion'
 
