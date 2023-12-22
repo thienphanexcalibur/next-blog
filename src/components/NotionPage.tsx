@@ -11,12 +11,20 @@ import Comment from "./Comment";
 import dynamic from "next/dynamic";
 
 const Code = dynamic(() => {
+  // @ts-ignore
   import("prismjs/themes/prism-okaidia.min.css");
   return import("react-notion-x/build/third-party/code").then(async (m) => {
     await Promise.all([
+      // @ts-ignore
       import("prismjs/components/prism-solidity.js"),
+
+      // @ts-ignore
       import("prismjs/components/prism-jsx.js"),
+
+      // @ts-ignore
       import("prismjs/components/prism-javascript.js"),
+
+      // @ts-ignore
       import("prismjs/components/prism-bash"),
     ]);
     return m.Code;

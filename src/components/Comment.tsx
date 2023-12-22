@@ -4,7 +4,7 @@ import { Box, useColorMode } from "@chakra-ui/react";
 const Comment = () => {
   const { colorMode } = useColorMode();
   const commentRef = useCallback(
-    (node: HTMLElement) => {
+    (node: HTMLDivElement) => {
       const script = document.createElement("script");
       if (node && colorMode) {
         const theme = `github-${colorMode}`;

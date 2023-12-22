@@ -22,9 +22,11 @@
     "notion-client": "^6.16.0",
     "notion-types": "^6.16.0",
     "notion-utils": "^6.16.0",
+    "prism-react-renderer": "^2.3.1",
     "prismjs": "^1.29.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-live": "^4.1.5",
     "react-notion-x": "^6.16.0"
   },
   "devDependencies": {
