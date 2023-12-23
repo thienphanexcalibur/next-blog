@@ -62,7 +62,7 @@ const NotionPost = ({
             borderRadius="12px"
             background="linear-gradient(
 						to top,
-						rgba(0, 0, 0, 0.7),
+						rgba(0, 0, 0, 0.85),
 						transparent
 					)"
             // _after={{
@@ -75,11 +75,18 @@ const NotionPost = ({
             //   content: '""',
             // }}
           >
-            <Text fontSize="xs" p={0} m={0} color="white" fontWeight={700}>
+            {/* <Text fontSize="xs" p={0} m={0} color="white" fontWeight={700}>
               {dayjs(createdTime).format("YYYY-MM-DD")}
-            </Text>
+            </Text> */}
             <LinkOverlay as={NextLink} href={href}>
-              <Text fontWeight={600} color="white">{title}</Text>
+              <Text
+                fontWeight={600}
+                fontSize="sm"
+                color="white"
+                textShadow="sm"
+              >
+                {title}
+              </Text>
             </LinkOverlay>
             <Box
               position="absolute"
