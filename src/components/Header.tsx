@@ -8,7 +8,12 @@ export default function Header() {
   const title = "thien k phan";
 
   return (
-    <HStack justifyContent="space-between" py={10}>
+    <HStack
+      as="header"
+      justifyContent="space-between"
+      py={10}
+      justifySelf="flex-end"
+    >
       <Link
         as={NextLink}
         href="/"

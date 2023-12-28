@@ -27,7 +27,16 @@ const NotionPost = ({
   createdTime?: number | null;
 }) => {
   return (
-    <LinkBox>
+    <LinkBox
+      _hover={{
+        "#post-title": {
+          transition: "background 200ms ease",
+          bgGradient: "linear(to-r, gray.300, yellow.400, pink.200)",
+          backgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        },
+      }}
+    >
       <Card
         borderRadius="12px 12px 0 0 "
         shadow="none"
@@ -80,6 +89,7 @@ const NotionPost = ({
             </Text> */}
             <LinkOverlay as={NextLink} href={href}>
               <Text
+                id="post-title"
                 fontWeight={600}
                 fontSize="sm"
                 color="white"

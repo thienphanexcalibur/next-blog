@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ThemeProvider from "@/providers/ThemeProvider";
-import { Container } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 
@@ -33,9 +33,17 @@ export default function RootLayout({
       </Script>
       <body>
         <ThemeProvider>
-          <Container maxW="7xl">
+          <Container
+            maxW="7xl"
+            minHeight="100vh"
+            pos="relative"
+            display="flex"
+            flexDir="column"
+          >
             <Header />
-            {children}
+            <Box as="main" flex={1}>
+              {children}
+            </Box>
             <Footer />
           </Container>
         </ThemeProvider>

@@ -8,6 +8,13 @@ const theme = extendTheme({
   fonts: {
     body: inter.style.fontFamily,
   },
+  styles: {
+    global: {
+      body: {
+        minHeight: "100vh",
+      },
+    },
+  },
 });
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {

@@ -2,7 +2,11 @@ import { getPage, normalizeNotionCoverPath } from "@/utils/notion";
 
 import NotionPage from "@/components/NotionPage";
 import { Metadata, ResolvingMetadata } from "next";
-import { getPageTitle } from "notion-utils";
+import {
+  getPageContentBlockIds,
+  getPageProperty,
+  getPageTitle,
+} from "notion-utils";
 
 interface Props {
   params: {

@@ -4,7 +4,7 @@ import { Linkedin, Github, Facebook } from "@geist-ui/react-icons";
 
 export default function Footer() {
   return (
-    <VStack width="100%" justifyContent="space-between" py={5} gap={5}>
+    <VStack as="footer" width="100%" justifyContent="space-between" py={5} gap={5}>
       <Text
         color="gray.800"
         fontSize="sm"
