@@ -1,37 +1,34 @@
-"use client";
-import { HStack, Text, VStack } from "@chakra-ui/react";
-import { Linkedin, Github, Facebook } from "@geist-ui/react-icons";
+import { LinkedInLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+
+const socials = [
+  {
+    icon: LinkedInLogoIcon,
+    href: "https://www.linkedin.com/in/phankhanhthien/",
+  },
+  {
+    icon: GitHubLogoIcon,
+    href: "https://github.com/thienphanexcalibur",
+  },
+];
 
 export default function Footer() {
   return (
-    <VStack as="footer" width="100%" justifyContent="space-between" py={5} gap={5}>
-      <Text
-        color="gray.800"
-        fontSize="sm"
-        fontWeight={500}
-        _dark={{ color: "gray.100" }}
-      >
+    <footer className="w-full flex justify-between py-5 mt-10 gap-5">
+      <div className="text-sm font-semibold">
         © {new Date().getFullYear()}, Thien K. Phan
-      </Text>
-      <HStack>
-        <Linkedin
-          onClick={() =>
-            window.open("https://www.linkedin.com/in/phankhanhthien/")
-          }
-          size={16}
-          cursor="pointer"
-        />
-        <Github
-          onClick={() => window.open("https://www.facebook.com/ThienFoster")}
-          size={16}
-          cursor="pointer"
-        />
-        <Facebook
-          onClick={() => window.open("https://github.com/thienphanexcalibur")}
-          size={16}
-          cursor="pointer"
-        />
-      </HStack>
-    </VStack>
+      </div>
+      <div className="flex gap-2">
+        {socials.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="cursor-pointer size-4"
+          >
+            {<item.icon />}
+          </Link>
+        ))}
+      </div>
+    </footer>
   );
 }

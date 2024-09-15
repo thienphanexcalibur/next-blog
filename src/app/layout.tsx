@@ -1,9 +1,9 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import ThemeProvider from "@/providers/ThemeProvider";
-import { Box, Container } from "@chakra-ui/react";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import "../index.css";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Thien k Phan",
@@ -32,20 +32,17 @@ export default function RootLayout({
         `}
       </Script>
       <body>
-        <ThemeProvider>
-          <Container
-            maxW="7xl"
-            minHeight="100vh"
-            pos="relative"
-            display="flex"
-            flexDir="column"
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="mx-auto px-6 xl:px-[120px] flex flex-col max-w-[1280px]">
             <Header />
-            <Box as="main" flex={1}>
-              {children}
-            </Box>
+            <main>{children}</main>
             <Footer />
-          </Container>
+          </div>
         </ThemeProvider>
       </body>
     </html>

@@ -1,22 +1,9 @@
-"use client";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { ReactNode } from "react";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
+"use client"
 
-const theme = extendTheme({
-  fonts: {
-    body: inter.style.fontFamily,
-  },
-  styles: {
-    global: {
-      body: {
-        minHeight: "100vh",
-      },
-    },
-  },
-});
+import * as React from "react"
+import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { type ThemeProviderProps } from "next-themes/dist/types"
 
-export default function ThemeProvider({ children }: { children: ReactNode }) {
-  return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }

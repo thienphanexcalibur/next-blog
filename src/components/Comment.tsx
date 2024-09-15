@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
-import { Box, useColorMode } from "@chakra-ui/react";
+import { useTheme } from "next-themes";
 
 const Comment = () => {
-  const { colorMode } = useColorMode();
+  const { theme: colorMode } = useTheme();
   const commentRef = useCallback(
     (node: HTMLDivElement) => {
       const script = document.createElement("script");
@@ -25,7 +25,7 @@ const Comment = () => {
     [colorMode]
   );
 
-  return <Box ref={commentRef} id="comment" />;
+  return <div ref={commentRef} id="comment" />;
 };
 
 export default Comment;
