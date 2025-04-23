@@ -4,7 +4,7 @@
 import "react-notion-x/src/styles.css";
 
 import { ExtendedRecordMap } from "notion-types";
-import { getPageTitle } from "notion-utils";
+import { getPageTitle} from "notion-utils";
 import { NotionRenderer } from "react-notion-x";
 import Comment from "./Comment";
 import dynamic from "next/dynamic";
