@@ -38,9 +38,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="mx-auto px-6 xl:px-[120px] flex flex-col max-w-[1280px]">
+          <div className="mx-auto px-6 xl:px-[120px] flex flex-col max-w-[1280px] min-h-screen">
             <Header />
-            <main>{children}</main>
+            <main className="min-h-[calc(100vh-116px)]">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

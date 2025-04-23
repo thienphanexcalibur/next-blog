@@ -25,7 +25,7 @@ const Comment = () => {
     [colorMode]
   );
 
-  return <div ref={commentRef} id="comment" />;
+  return <div className="flex justify-start [&>div]:mx-0" ref={commentRef} id="comment" />;
 };
 
 export default Comment;

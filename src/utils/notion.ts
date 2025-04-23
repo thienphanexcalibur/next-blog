@@ -3,7 +3,6 @@ import { PageMap } from "notion-types";
 import { getAllPagesInSpace as notionUtilsGetAllPaceInSpaces } from "notion-utils";
 const notionAPI = new NotionAPI({
   activeUser: "96c3610f-e6ac-4220-a62e-ea41e17def37",
-  authToken: process.env.NOTION_TOKEN_V2,
 });
 
 export const getAllPagesInSpace = async () => {

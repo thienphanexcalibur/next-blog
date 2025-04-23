@@ -20,20 +20,17 @@ export default async function Page() {
           const createdTime2 = b[1]?.block[id2].value.created_time;
           return dayjs(createdTime1).isBefore(createdTime2) ? 1 : -1;
         })
-        .map(
-          ([id, data], index) =>
-            index !== 0 && (
-              <NotionPost
-                key={id}
-                title={getPageTitle(data as ExtendedRecordMap)}
-                createdTime={data?.block[id].value.created_time ?? null}
-                href={`/posts/${id}`}
-                cover={normalizeNotionCoverPath(
-                  data?.block[id].value.format?.page_cover
-                )}
-              />
-            )
-        )}
+        .map(([id, data], index) => (
+          <NotionPost
+            key={id}
+            title={getPageTitle(data as ExtendedRecordMap)}
+            createdTime={data?.block[id].value.created_time ?? null}
+            href={`/posts/${id}`}
+            cover={normalizeNotionCoverPath(
+              data?.block[id].value.format?.page_cover
+            )}
+          />
+        ))}
     </div>
   );
 }
