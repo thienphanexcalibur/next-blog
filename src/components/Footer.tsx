@@ -1,4 +1,5 @@
-import { LinkedInLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+
 import Link from "next/link";
 
 const socials = [
@@ -14,7 +15,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="w-full flex justify-between py-5 mt-10 gap-5">
+    <footer className="w-full flex flex-col justify-center items-center py-5 mt-10 gap-5 mb-6">
       <div className="text-sm font-semibold">
         © {new Date().getFullYear()}, Thien K. Phan
       </div>

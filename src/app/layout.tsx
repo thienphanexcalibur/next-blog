@@ -1,8 +1,10 @@
+import "../index.css";
+
+import type { Metadata, Viewport } from "next";
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import "../index.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 export const metadata: Metadata = {
@@ -40,7 +42,7 @@ export default function RootLayout({
         >
           <div className="mx-auto px-6 xl:px-[120px] flex flex-col max-w-[1280px] min-h-screen">
             <Header />
-            <main className="min-h-[calc(100vh-116px)]">{children}</main>
+            <main className="min-h-[calc(100vh-116px)] mt-6">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

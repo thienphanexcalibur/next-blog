@@ -3,11 +3,11 @@
 
 import "react-notion-x/src/styles.css";
 
-import { ExtendedRecordMap } from "notion-types";
-import { getPageTitle} from "notion-utils";
-import { NotionRenderer } from "react-notion-x";
 import Comment from "./Comment";
+import { ExtendedRecordMap } from "notion-types";
+import { NotionRenderer } from "react-notion-x";
 import dynamic from "next/dynamic";
+import { getPageTitle } from "notion-utils";
 import { useTheme } from "next-themes";
 
 const Code = dynamic(() => {
