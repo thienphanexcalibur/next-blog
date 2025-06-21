@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { 
   Menu, 
@@ -153,10 +154,8 @@ const PrinciplesChart = () => {
         chartInstance.current.destroy();
       }
 
-      const textColor =
-        theme === "dark" ? "rgba(229, 231, 235, 0.8)" : "rgba(55, 65, 81, 1)";
-      const gridColor =
-        theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
+      const textColor = theme === "dark" ? "rgba(229, 231, 235, 0.8)" : "rgba(55, 65, 81, 1)";
+      const gridColor = theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
 
       const ctx = chartRef.current.getContext("2d");
       if (ctx) {
@@ -168,15 +167,15 @@ const PrinciplesChart = () => {
               {
                 label: "Muscle Growth (Hypertrophy)",
                 data: [50, 85, 100],
-                backgroundColor: "rgba(217, 119, 6, 0.6)",
-                borderColor: "rgba(217, 119, 6, 1)",
+                backgroundColor: "hsl(var(--primary))",
+                borderColor: "hsl(var(--primary))",
                 borderWidth: 1,
               },
               {
                 label: "Maximal Strength (1RM)",
                 data: [60, 75, 80],
-                backgroundColor: "rgba(107, 114, 128, 0.6)",
-                borderColor: "rgba(107, 114, 128, 1)",
+                backgroundColor: "hsl(var(--secondary))",
+                borderColor: "hsl(var(--secondary))",
                 borderWidth: 1,
               },
             ],
@@ -264,7 +263,7 @@ const PrinciplesChart = () => {
 // Main Component
 export default function PowerliftingPage() {
   const [activeSection, setActiveSection] = useState("hero");
-  const [generatedProgram, setGeneratedProgram] = useState<any>(null);
+  const [generatedProgram, setGeneratedProgram] = useState(null);
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll("main section"));
@@ -586,4 +585,4 @@ export default function PowerliftingPage() {
       </footer>
     </div>
   );
-}
+} 
