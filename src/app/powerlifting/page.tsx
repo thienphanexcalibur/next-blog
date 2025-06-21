@@ -1,11 +1,52 @@
 "use client";
 
 import { Chart, registerables } from "chart.js";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useTheme } from "next-themes";
 
 Chart.register(...registerables);
+
+// TypeScript interfaces
+interface SectionProps {
+  id: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+interface HeaderProps {
+  activeSection: string;
+}
+
+interface NavLinkProps {
+  href: string;
+  text: string;
+}
+
+interface ProgramData {
+  [week: string]: Array<{
+    day: string;
+    focus: string;
+    workout: Array<{
+      exercise: string;
+      sets: string | number;
+      reps: string | number;
+      rpe: string | number;
+    }>;
+  }>;
+}
+
+interface InputsState {
+  experience: string;
+  goal: string;
+  days: string;
+}
+
+interface RatingsState {
+  sleep: number;
+  stress: number;
+  soreness: number;
+}
 
 // Helper Components
 const Loader = () => (
@@ -17,8 +58,8 @@ const Loader = () => (
   </div>
 );
 
-const Section = ({ id, children, className = "" }) => {
-  const sectionRef = useRef(null);
+const Section: React.FC<SectionProps> = ({ id, children, className = "" }) => {
+  const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -38,7 +79,6 @@ const Section = ({ id, children, className = "" }) => {
 
     return () => {
       if (sectionRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(sectionRef.current);
       }
     };
@@ -58,7 +98,7 @@ const Section = ({ id, children, className = "" }) => {
 };
 
 // Main Section Components
-const Header = ({ activeSection }) => {
+const Header: React.FC<HeaderProps> = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -70,7 +110,7 @@ const Header = ({ activeSection }) => {
     { href: "#recovery", text: "Recovery" },
   ];
 
-  const NavLink = ({ href, text }) => (
+  const NavLink: React.FC<NavLinkProps> = ({ href, text }) => (
     <a
       href={href}
       onClick={() => setIsMenuOpen(false)}
@@ -84,7 +124,7 @@ const Header = ({ activeSection }) => {
     </a>
   );
 
-  const MobileNavLink = ({ href, text }) => (
+  const MobileNavLink: React.FC<NavLinkProps> = ({ href, text }) => (
     <a
       href={href}
       onClick={() => setIsMenuOpen(false)}
@@ -163,7 +203,7 @@ const HeroSection = () => (
       Master Your Strength Potential.
     </h1>
     <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-400">
-      Move beyond "just lift heavy." This guide translates the science of
+      Move beyond &ldquo;just lift heavy.&rdquo; This guide translates the science of
       training volume into a practical, interactive framework to help you build
       a smarter, stronger program.
     </p>
@@ -177,8 +217,8 @@ const HeroSection = () => (
 );
 
 const PrinciplesSection = () => {
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstance = useRef<Chart>();
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -193,71 +233,77 @@ const PrinciplesSection = () => {
         theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
 
       const ctx = chartRef.current.getContext("2d");
-      chartInstance.current = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["Low Volume", "Moderate Volume", "High Volume"],
-          datasets: [
-            {
-              label: "Muscle Growth (Hypertrophy)",
-              data: [50, 85, 100],
-              backgroundColor: "rgba(217, 119, 6, 0.6)",
-              borderColor: "rgba(217, 119, 6, 1)",
-              borderWidth: 1,
+      if (ctx) {
+        chartInstance.current = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["Low Volume", "Moderate Volume", "High Volume"],
+            datasets: [
+              {
+                label: "Muscle Growth (Hypertrophy)",
+                data: [50, 85, 100],
+                backgroundColor: "rgba(217, 119, 6, 0.6)",
+                borderColor: "rgba(217, 119, 6, 1)",
+                borderWidth: 1,
+              },
+              {
+                label: "Maximal Strength (1RM)",
+                data: [60, 75, 80],
+                backgroundColor: "rgba(107, 114, 128, 0.6)",
+                borderColor: "rgba(107, 114, 128, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: { color: textColor, callback: (value) => value + "%" },
+                grid: { color: gridColor },
+                title: {
+                  display: true,
+                  text: "Relative Gains (%)",
+                  color: textColor,
+                },
+              },
+              x: {
+                ticks: { color: textColor },
+                grid: { display: false },
+              },
             },
-            {
-              label: "Maximal Strength (1RM)",
-              data: [60, 75, 80],
-              backgroundColor: "rgba(107, 114, 128, 0.6)",
-              borderColor: "rgba(107, 114, 128, 1)",
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { color: textColor, callback: (value) => value + "%" },
-              grid: { color: gridColor },
+            plugins: {
               title: {
                 display: true,
-                text: "Relative Gains (%)",
+                text: "Volume Dose-Response: Hypertrophy vs. Strength",
+                font: { size: 16 },
                 color: textColor,
               },
-            },
-            x: {
-              ticks: { color: textColor },
-              grid: { display: false },
-            },
-          },
-          plugins: {
-            title: {
-              display: true,
-              text: "Volume Dose-Response: Hypertrophy vs. Strength",
-              font: { size: 16 },
-              color: textColor,
-            },
-            legend: { labels: { color: textColor } },
-            tooltip: {
-              titleColor: "#fff",
-              bodyColor: "#fff",
-              callbacks: {
-                afterLabel: (context) =>
-                  context.dataset.label.includes("Hypertrophy")
-                    ? context.dataIndex === 2
-                      ? "Finding: 12-20 sets/week is optimal."
-                      : "Finding: More sets lead to more growth."
-                    : context.dataIndex === 2
-                    ? "Finding: Pronounced diminishing returns."
-                    : "Finding: Gains quickly level off.",
+              legend: { labels: { color: textColor } },
+              tooltip: {
+                titleColor: "#fff",
+                bodyColor: "#fff",
+                callbacks: {
+                  afterLabel: (context) => {
+                    const label = context.dataset.label;
+                    if (label?.includes("Hypertrophy")) {
+                      return context.dataIndex === 2
+                        ? "Finding: 12-20 sets/week is optimal."
+                        : "Finding: More sets lead to more growth.";
+                    } else {
+                      return context.dataIndex === 2
+                        ? "Finding: Pronounced diminishing returns."
+                        : "Finding: Gains quickly level off.";
+                    }
+                  },
+                },
               },
             },
           },
-        },
-      });
+        });
+      }
     }
 
     return () => {
@@ -283,7 +329,7 @@ const PrinciplesSection = () => {
       </div>
       <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
         <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
-          The Powerlifter's Paradox: Volume's Dual Effect
+          The Powerlifter&apos;s Paradox: Volume&apos;s Dual Effect
         </h3>
         <p className="mt-2 text-gray-600 dark:text-gray-400">
           Volume has a different effect on muscle size versus maximal strength.
@@ -350,9 +396,9 @@ const PrinciplesSection = () => {
 };
 
 const PeriodizationSection = () => {
-  const [openDetails, setOpenDetails] = useState(null);
+  const [openDetails, setOpenDetails] = useState<string | null>(null);
 
-  const toggleDetails = (id) => {
+  const toggleDetails = (id: string) => {
     setOpenDetails(openDetails === id ? null : id);
   };
 
@@ -474,29 +520,34 @@ const VolumeSection = () => {
       name: "MV",
       title: "Maintenance Volume",
       desc: "The minimum to keep gains (~6 sets/week).",
-      color: "gray",
+      color: "gray" as const,
     },
     {
       name: "MEV",
       title: "Minimum Effective Volume",
       desc: "The minimum to make new gains (~10-12 sets/week to start a block).",
-      color: "green",
+      color: "green" as const,
     },
     {
       name: "MAV",
       title: "Maximum Adaptive Volume",
       desc: 'Your "sweet spot" range for the best progress.',
-      color: "amber",
+      color: "amber" as const,
     },
     {
       name: "MRV",
       title: "Maximum Recoverable Volume",
       desc: "The absolute ceiling you can recover from.",
-      color: "red",
+      color: "red" as const,
     },
   ];
 
-  const colors = {
+  const colors: Record<string, {
+    bg: string;
+    border: string;
+    text: string;
+    subtext: string;
+  }> = {
     gray: {
       bg: "dark:bg-gray-800 bg-gray-50",
       border: "dark:border-gray-700 border-gray-200",
@@ -533,7 +584,7 @@ const VolumeSection = () => {
           Finding Your Optimal Volume
         </p>
         <p className="mt-4 max-w-3xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-          "Optimal volume" isn't one number—it's a personal range. This section
+          &ldquo;Optimal volume&rdquo; isn&apos;t one number—it&apos;s a personal range. This section
           gives you the tools to find your sweet spot.
         </p>
       </div>
@@ -615,16 +666,16 @@ const VolumeSection = () => {
 };
 
 const AICoachSection = () => {
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<InputsState>({
     experience: "Intermediate",
     goal: "Hypertrophy (Build Muscle)",
     days: "4",
   });
-  const [program, setProgram] = useState(null);
+  const [program, setProgram] = useState<ProgramData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
@@ -653,7 +704,8 @@ const AICoachSection = () => {
         throw new Error("Invalid response structure from API.");
       }
     } catch (err) {
-      setError(err.message);
+      const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
+      setError(errorMessage);
       console.error("Error generating program:", err);
     } finally {
       setIsLoading(false);
@@ -751,7 +803,7 @@ const AICoachSection = () => {
         {isLoading && <Loader />}
         {error && (
           <div className="text-center p-4 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg">
-            <p>Sorry, the AI Coach couldn't generate a program: {error}</p>
+            <p>Sorry, the AI Coach couldn&apos;t generate a program: {error}</p>
           </div>
         )}
         {program && (
@@ -761,7 +813,7 @@ const AICoachSection = () => {
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-6 mb-4">
                   {week.charAt(0).toUpperCase() + week.slice(1)}
                 </h3>
-                {days.map((day, dayIndex) => (
+                {Array.isArray(days) && days.map((day: any, dayIndex: number) => (
                   <div
                     key={`${week}-${day.day}-${dayIndex}`}
                     className="mb-6 overflow-x-auto bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
@@ -779,7 +831,7 @@ const AICoachSection = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {day.workout.map((w, wIndex) => (
+                        {Array.isArray(day.workout) && day.workout.map((w: any, wIndex: number) => (
                           <tr
                             key={`${week}-${day.day}-${w.exercise}-${wIndex}`}
                           >
@@ -803,13 +855,13 @@ const AICoachSection = () => {
 };
 
 const RecoverySection = () => {
-  const [ratings, setRatings] = useState({ sleep: 3, stress: 3, soreness: 3 });
+  const [ratings, setRatings] = useState<RatingsState>({ sleep: 3, stress: 3, soreness: 3 });
   const [advice, setAdvice] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleRatingChange = (e) => {
-    setRatings({ ...ratings, [e.target.name]: e.target.value });
+  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRatings({ ...ratings, [e.target.name]: parseInt(e.target.value) });
   };
 
   const getAdvice = async () => {
@@ -836,7 +888,8 @@ const RecoverySection = () => {
         throw new Error("Invalid response from API.");
       }
     } catch (err) {
-      setError(err.message);
+      const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -852,8 +905,8 @@ const RecoverySection = () => {
           Your Recovery Toolkit
         </p>
         <p className="mt-4 max-w-3xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-          High-volume training is demanding. Prioritizing recovery isn't
-          optional—it's what allows you to adapt and get stronger.
+          High-volume training is demanding. Prioritizing recovery isn&apos;t
+          optional—it&apos;s what allows you to adapt and get stronger.
         </p>
       </div>
 
@@ -978,7 +1031,7 @@ const RecoverySection = () => {
         {isLoading && <Loader />}
         {error && (
           <div className="mt-6 text-center p-4 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg">
-            <p>Sorry, the AI Advisor couldn't generate advice: {error}</p>
+            <p>Sorry, the AI Advisor couldn&apos;t generate advice: {error}</p>
           </div>
         )}
         {advice && (
