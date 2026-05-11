@@ -1,12 +1,12 @@
-import { getPage, normalizeNotionCoverPath } from "@/utils/notion";
-
-import NotionPage from "@/components/NotionPage";
 import { Metadata, ResolvingMetadata } from "next";
+import { getPage, normalizeNotionCoverPath } from "@/utils/notion";
 import {
   getPageContentBlockIds,
   getPageProperty,
   getPageTitle,
 } from "notion-utils";
+
+import NotionPage from "@/components/NotionPage";
 
 interface Props {
   params: {
@@ -31,7 +31,7 @@ export async function generateMetadata(
     openGraph: {
       images: [
         normalizeNotionCoverPath(
-          recordMap?.block[id].value?.format.page_cover
+          recordMap?.block[id].value?.value?.format.page_cover
         ) ?? "",
         ...previousImages,
       ].filter(Boolean),
