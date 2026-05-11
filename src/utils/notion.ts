@@ -17,7 +17,7 @@ export const getAllPagesInSpace = async () => {
       return await notionAPI.getPage(pageId);
     },
     {
-      traverseCollections: false,
+      traverseCollections: true,
     }
   );
   return pages;

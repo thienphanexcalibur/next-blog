@@ -1,10 +1,11 @@
 import { Metadata, ResolvingMetadata } from "next";
-import { getPage, normalizeNotionCoverPath } from "@/utils/notion";
 import {
+  getBlockValue,
   getPageContentBlockIds,
   getPageProperty,
   getPageTitle,
 } from "notion-utils";
+import { getPage, normalizeNotionCoverPath } from "@/utils/notion";
 
 import NotionPage from "@/components/NotionPage";
 
@@ -15,7 +16,7 @@ interface Props {
 }
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   // read route params
   const id = params.id;
@@ -31,7 +32,7 @@ export async function generateMetadata(
     openGraph: {
       images: [
         normalizeNotionCoverPath(
-          recordMap?.block[id].value?.value?.format.page_cover
+          getBlockValue(recordMap.block[id]).format?.page_cover,
         ) ?? "",
         ...previousImages,
       ].filter(Boolean),
