@@ -53,7 +53,7 @@ export const ProgramDisplay: React.FC<ProgramDisplayProps> = ({ program }) => {
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <table className="w-full">
+                      <table className="w-full tabular-nums">
                         <thead>
                           <tr className="border-b">
                             <th className="text-left py-2 px-3 font-semibold text-sm">Exercise</th>

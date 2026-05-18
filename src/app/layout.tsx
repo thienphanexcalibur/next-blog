@@ -14,6 +14,10 @@ export const viewport: Viewport = {
   width: "device-width",
   height: "device-height",
   initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
 
 export default function RootLayout({
@@ -34,6 +38,12 @@ export default function RootLayout({
         `}
       </Script>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:border focus:rounded-md"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -42,7 +52,7 @@ export default function RootLayout({
         >
           <div className="mx-auto px-6 xl:px-[120px] flex flex-col max-w-[1280px] min-h-screen">
             <Header />
-            <main className="min-h-[calc(100vh-116px)] mt-6">{children}</main>
+            <main id="main-content" className="min-h-[calc(100vh-116px)] mt-6">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

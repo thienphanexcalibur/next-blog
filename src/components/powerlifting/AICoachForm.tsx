@@ -104,9 +104,9 @@ Provide the output as a JSON object. The root object should have keys "week1", "
       <CardContent className="space-y-6">
         <div className="grid md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Experience Level</label>
+            <label htmlFor="experience-select" className="text-sm font-medium">Experience Level</label>
             <Select value={inputs.experience} onValueChange={(value) => handleInputChange('experience', value)}>
-              <SelectTrigger>
+              <SelectTrigger id="experience-select">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -118,9 +118,9 @@ Provide the output as a JSON object. The root object should have keys "week1", "
           </div>
           
           <div className="space-y-2">
-            <label className="text-sm font-medium">Primary Goal</label>
+            <label htmlFor="goal-select" className="text-sm font-medium">Primary Goal</label>
             <Select value={inputs.goal} onValueChange={(value) => handleInputChange('goal', value)}>
-              <SelectTrigger>
+              <SelectTrigger id="goal-select">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -131,9 +131,9 @@ Provide the output as a JSON object. The root object should have keys "week1", "
           </div>
           
           <div className="space-y-2">
-            <label className="text-sm font-medium">Training Days/Week</label>
+            <label htmlFor="days-select" className="text-sm font-medium">Training Days/Week</label>
             <Select value={inputs.days} onValueChange={(value) => handleInputChange('days', value)}>
-              <SelectTrigger>
+              <SelectTrigger id="days-select">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -152,7 +152,7 @@ Provide the output as a JSON object. The root object should have keys "week1", "
             size="lg"
             className="gap-2"
           >
-            <Sparkles className="h-4 w-4" />
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
             Generate My Program
           </Button>
         </div>
@@ -160,7 +160,7 @@ Provide the output as a JSON object. The root object should have keys "week1", "
         {isLoading && <Loader />}
         
         {error && (
-          <Card className="border-destructive/50 bg-destructive/5">
+          <Card className="border-destructive/50 bg-destructive/5" role="alert">
             <CardContent className="pt-6">
               <p className="text-destructive text-center">
                 Sorry, the AI Coach couldn&apos;t generate a program: {error}

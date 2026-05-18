@@ -50,8 +50,9 @@ export const Section: React.FC<SectionProps> = ({
       id={id}
       ref={sectionRef}
       className={cn(
-        "py-16 md:py-24 space-y-12 transition-all duration-700 ease-out",
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
+        "py-16 md:py-24 space-y-12 scroll-mt-20",
+        "motion-safe:transition-[opacity,transform] motion-safe:duration-700 motion-safe:ease-out",
+        isVisible ? "opacity-100 translate-y-0" : "motion-safe:opacity-0 motion-safe:translate-y-5",
         className
       )}
     >

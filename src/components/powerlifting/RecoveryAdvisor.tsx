@@ -96,11 +96,12 @@ Based on these metrics, provide 2-3 brief, actionable pieces of advice for my tr
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-4 text-center">
             <div className="flex items-center justify-center gap-2">
-              <Moon className="h-5 w-5 text-blue-500" />
-              <label className="text-sm font-medium">Sleep Quality</label>
+              <Moon className="h-5 w-5 text-blue-500" aria-hidden="true" />
+              <label htmlFor="sleep-rating" className="text-sm font-medium">Sleep Quality</label>
             </div>
             <div className="space-y-2">
               <Input
+                id="sleep-rating"
                 type="range"
                 min="1"
                 max="5"
@@ -120,11 +121,12 @@ Based on these metrics, provide 2-3 brief, actionable pieces of advice for my tr
 
           <div className="space-y-4 text-center">
             <div className="flex items-center justify-center gap-2">
-              <Zap className="h-5 w-5 text-orange-500" />
-              <label className="text-sm font-medium">Stress Level</label>
+              <Zap className="h-5 w-5 text-orange-500" aria-hidden="true" />
+              <label htmlFor="stress-rating" className="text-sm font-medium">Stress Level</label>
             </div>
             <div className="space-y-2">
               <Input
+                id="stress-rating"
                 type="range"
                 min="1"
                 max="5"
@@ -144,11 +146,12 @@ Based on these metrics, provide 2-3 brief, actionable pieces of advice for my tr
 
           <div className="space-y-4 text-center">
             <div className="flex items-center justify-center gap-2">
-              <Activity className="h-5 w-5 text-red-500" />
-              <label className="text-sm font-medium">Muscle Soreness</label>
+              <Activity className="h-5 w-5 text-red-500" aria-hidden="true" />
+              <label htmlFor="soreness-rating" className="text-sm font-medium">Muscle Soreness</label>
             </div>
             <div className="space-y-2">
               <Input
+                id="soreness-rating"
                 type="range"
                 min="1"
                 max="5"
@@ -174,15 +177,15 @@ Based on these metrics, provide 2-3 brief, actionable pieces of advice for my tr
             size="lg"
             className="gap-2"
           >
-            <Sparkles className="h-4 w-4" />
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
             Get Recovery Advice
           </Button>
         </div>
 
-        {isLoading && <Loader message="Analyzing your recovery metrics..." />}
+        {isLoading && <Loader message="Analyzing your recovery metrics…" />}
         
         {error && (
-          <Card className="border-destructive/50 bg-destructive/5">
+          <Card className="border-destructive/50 bg-destructive/5" role="alert">
             <CardContent className="pt-6">
               <p className="text-destructive text-center">
                 Sorry, the AI Advisor couldn&apos;t generate advice: {error}
@@ -192,7 +195,7 @@ Based on these metrics, provide 2-3 brief, actionable pieces of advice for my tr
         )}
 
         {advice && (
-          <Card className="border-primary/20 bg-primary/5">
+          <Card className="border-primary/20 bg-primary/5" aria-live="polite">
             <CardContent className="pt-6">
               <div className="whitespace-pre-wrap text-sm leading-relaxed">
                 {advice}

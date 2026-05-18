@@ -41,9 +41,9 @@ export default function NotionPage(props: NotionPageProps) {
 
   return (
     <>
-      <div className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-5">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-5">
         {title}
-      </div>
+      </h1>
       <div className="[&_.notion-body]:w-full [&_.notion-body]:p-0">
         <NotionRenderer
           recordMap={recordMap}

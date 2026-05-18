@@ -6,10 +6,12 @@ const socials = [
   {
     icon: LinkedInLogoIcon,
     href: "https://www.linkedin.com/in/phankhanhthien/",
+    label: "LinkedIn",
   },
   {
     icon: GitHubLogoIcon,
     href: "https://github.com/thienphanexcalibur",
+    label: "GitHub",
   },
 ];
 
@@ -24,9 +26,10 @@ export default function Footer() {
           <Link
             key={item.href}
             href={item.href}
-            className="cursor-pointer size-4"
+            aria-label={item.label}
+            className="cursor-pointer size-4 hover:opacity-70 transition-opacity"
           >
-            {<item.icon />}
+            <item.icon aria-hidden="true" />
           </Link>
         ))}
       </div>

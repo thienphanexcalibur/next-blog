@@ -76,7 +76,7 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
                       : "text-foreground/60"
                   )}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4" aria-hidden="true" />
                   <span>{link.text}</span>
                 </a>
               );
@@ -91,9 +91,9 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6" aria-hidden="true" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6" aria-hidden="true" />
             )}
             <span className="sr-only">Toggle Menu</span>
           </button>
@@ -117,7 +117,7 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
                       : "text-foreground/60"
                   )}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4" aria-hidden="true" />
                   <span>{link.text}</span>
                 </a>
               );
@@ -131,7 +131,7 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
 
 // Hero Section
 const HeroSection = () => (
-  <section className="py-24 text-center">
+  <section id="hero" className="py-24 text-center">
     <div className="container">
       <Badge variant="outline" className="mb-4">
         Science-Based Training

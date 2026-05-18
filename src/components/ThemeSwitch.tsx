@@ -10,10 +10,10 @@ export default function ThemeSwitch() {
     <Button
       variant="outline"
       size="icon"
-      aria-label="colormode"
+      aria-label="Toggle theme"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      {theme === "dark" ? <MoonIcon /> : <SunIcon />}
+      {theme === "dark" ? <MoonIcon aria-hidden="true" /> : <SunIcon aria-hidden="true" />}
     </Button>
   );
 }

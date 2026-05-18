@@ -14,6 +14,7 @@ export default function Header() {
           alt="signature"
           width={100}
           height={50}
+          priority
           className={classNames(commonCls, "dark:hidden block")}
         />
         <Image
@@ -21,6 +22,7 @@ export default function Header() {
           alt="signature"
           width={100}
           height={50}
+          priority
           className={classNames(commonCls, "dark:block hidden")}
         />
       </NextLink>
