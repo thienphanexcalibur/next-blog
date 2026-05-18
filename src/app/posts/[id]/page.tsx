@@ -10,18 +10,16 @@ import { getPage, normalizeNotionCoverPath } from "@/utils/notion";
 import NotionPage from "@/components/NotionPage";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  // read route params
-  const id = params.id;
+  const { id } = await params;
 
-  // fetch data
   const recordMap = await getPage(id);
 
   // optionally access and extend (rather than replace) parent metadata
@@ -40,8 +38,8 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const data = await getPage(id);
 
   const spaceId = process.env.NOTION_ROOT_SPACE_ID;

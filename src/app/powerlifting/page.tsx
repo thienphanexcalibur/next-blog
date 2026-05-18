@@ -154,7 +154,7 @@ const HeroSection = () => (
 // Principles Chart Component
 const PrinciplesChart = () => {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart>();
+  const chartInstance = useRef<Chart | undefined>(undefined);
   const { theme } = useTheme();
 
   useEffect(() => {

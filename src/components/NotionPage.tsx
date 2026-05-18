@@ -2,6 +2,7 @@
 // core styles shared by all of react-notion-x (required)
 
 import "react-notion-x/src/styles.css";
+import "prismjs/themes/prism-okaidia.min.css";
 
 import Comment from "./Comment";
 import { ExtendedRecordMap } from "notion-types";
@@ -11,8 +12,6 @@ import { getPageTitle } from "notion-utils";
 import { useTheme } from "next-themes";
 
 const Code = dynamic(() => {
-  // @ts-ignore
-  import("prismjs/themes/prism-okaidia.min.css");
   return import("react-notion-x/build/third-party/code").then(async (m) => {
     await Promise.all([
       // @ts-ignore
