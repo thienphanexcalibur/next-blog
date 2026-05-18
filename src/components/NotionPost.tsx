@@ -14,11 +14,12 @@ const NotionPost = ({
 }) => {
   return (
     <NextLink href={href} className="relative">
-      <div className="w-full h-[200px]">
+      <div className="relative w-full h-[200px]">
         {cover && (
           <Image
             src={cover}
             fill={true}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             alt={title ?? ""}
             className="object-cover rounded-md"
           />
